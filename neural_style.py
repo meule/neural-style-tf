@@ -12,6 +12,8 @@ import time
 import cv2
 import os
 
+ndims = 4
+
 '''
   parsing and configuration
 '''
@@ -625,8 +627,9 @@ def minimize_with_adam(sess, net, optimizer, init_img, loss):
 def get_optimizer(loss):
   print_iterations = args.print_iterations if args.verbose else 0
   if args.optimizer == 'lbfgs':
+    start = np.arange(ndims, 0, -1, dtype='float64')
     optimizer = tfp.optimizer.lbfgs_minimize(
-      loss,
+      loss, start,
       max_iterations = args.max_iterations
     )
     '''
