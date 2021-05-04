@@ -1,6 +1,8 @@
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 
+import tensorflow_probability as tfp
+
 import numpy as np 
 import scipy.io  
 import argparse 
@@ -623,10 +625,16 @@ def minimize_with_adam(sess, net, optimizer, init_img, loss):
 def get_optimizer(loss):
   print_iterations = args.print_iterations if args.verbose else 0
   if args.optimizer == 'lbfgs':
+    optimizer = tfp.optimizer.lbfgs_minimize(
+      loss,
+      max_iterations = args.max_iterations
+    )
+    '''
     optimizer = tf.contrib.opt.ScipyOptimizerInterface(
       loss, method='L-BFGS-B',
       options={'maxiter': args.max_iterations,
                   'disp': print_iterations})
+    '''
   elif args.optimizer == 'adam':
     optimizer = tf.train.AdamOptimizer(args.learning_rate)
   return optimizer
