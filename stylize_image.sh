@@ -8,7 +8,14 @@ if [ "$#" -le 1 ]; then
    exit 1
 fi
 
-device='/gpu:0'
+echo ""
+read -p "Do you have a CUDA enabled GPU? [y/n] $cr > " cuda
+
+if [ "$cuda" != "y" ]; then
+  device='/cpu:0'
+else
+  device='/gpu:0'
+fi
 
 # Parse arguments
 content_image="$1"
