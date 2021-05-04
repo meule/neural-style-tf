@@ -33,4 +33,5 @@ python neural_style.py \
 --style_imgs "${style_filename}" \
 --style_imgs_dir "${style_dir}" \
 --device "${device}" \
---verbose;
+--verbose \
+--optimizer adam ;
